@@ -1,0 +1,33 @@
+{
+  "devDependencies": {
+    "turbo": "^2.4.4"
+  },
+  "name": "flux",
+  "version": "1.0.0",
+  "description": "Full-Stack Authentication & Content Management System\r ## Overview\r This project is a full-stack authentication and content management system built with **NestJS** (backend) and **Next.js** (frontend). It supports role-based access control (RBAC) for two types of content:",
+  "main": "index.js",
+  "dependencies": {
+    "turbo-windows-64": "^2.4.4"
+  },
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint"
+  },
+  "packageManager": "npm@11.2.0",
+  "workspaces": [
+    "apps/*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fighteros/flux.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Fighteros/flux/issues"
+  },
+  "homepage": "https://github.com/Fighteros/flux#readme"
+}

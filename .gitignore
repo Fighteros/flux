@@ -29,9 +29,9 @@ yarn-error.log*
 .env.*.local
 
 # Build output
-dist/
-build/
-out/
+**/dist
+**/build
+**/out
 
 # Cache directories
 .cache/
