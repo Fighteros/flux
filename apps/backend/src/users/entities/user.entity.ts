@@ -29,9 +29,6 @@ export class User {
   password: string;
 
   @Column()
-  hashedRefreshToken: string;
-
-  @Column()
   role: string;
 
   @CreateDateColumn()
