@@ -1,15 +1,19 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
+  HttpException,
+  HttpStatus,
+  Param,
+  Patch,
+  Post,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { plainToInstance } from 'class-transformer';
+import { ReadUserDto } from './dto/read-user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -22,12 +26,20 @@ export class UsersController {
 
   @Get()
   findAll() {
-    return this.usersService.findAll();
+    const users = this.usersService.findAll();
+    if (!users)
+      throw new HttpException('Users not found', HttpStatus.NOT_FOUND);
+    return plainToInstance(ReadUserDto, users);
   }
 
-  @Get()
-  findOne(email: string) {
-    return this.usersService.findOne(email);
+  @Get(':email')
+  async findOne(@Param('email') email: string) {
+    const user = await this.usersService.findOne(email);
+    if (!user) {
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    }
+
+    return user;
   }
 
   @Patch(':id')
