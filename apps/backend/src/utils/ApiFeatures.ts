@@ -1,3 +1,1 @@
-export class ApiFeatures {
-
-}
+export class ApiFeatures {}
