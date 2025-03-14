@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
+  Index,
 } from 'typeorm';
 import { Post } from '../../posts/entities/post.entity';
 
@@ -20,6 +21,7 @@ export class User {
   last_name: string;
 
   @Column()
+  @Index({ unique: true })
   email: string;
 
   @Column()
