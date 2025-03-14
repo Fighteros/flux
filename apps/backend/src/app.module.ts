@@ -3,9 +3,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserModule } from './user/user.module';
-import { PostsModule } from './posts/posts.module';
 
+import { PostsModule } from './posts/posts.module';
 import configuration from '../config/configuration';
 
 @Module({
