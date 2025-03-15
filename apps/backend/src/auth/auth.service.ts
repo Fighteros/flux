@@ -11,12 +11,14 @@ type AuthInput = {
 type SignInResponse = {
   userId: number;
   email: string;
+  role: string;
 };
 
 type AuthResponse = {
   accessToken: string;
   userId: number;
   email: string;
+  role: string;
 };
 
 
@@ -48,6 +50,7 @@ export class AuthService {
       return {
         userId: user.id,
         email: user.email,
+        role: user.role,
       };
     }
 
@@ -62,6 +65,7 @@ export class AuthService {
 
     const accessToken = await this.jwtService.signAsync(tokenPayload);
 
-    return { accessToken: accessToken, email: user.email, userId: user.userId };
+    // user role from db not and not saved to token for token hijack prevention
+    return { accessToken: accessToken, email: user.email, userId: user.userId, role: user.role };
   }
 }
