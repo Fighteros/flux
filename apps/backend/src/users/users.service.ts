@@ -20,7 +20,7 @@ export class UsersService {
       where: { email: createUserDto.email },
     });
     if (existingUser) {
-      throw new ConflictException('User with this email already exists');
+      throw new ConflictException('You can not create a user with this email');
     }
     const { password } = createUserDto;
 
@@ -32,6 +32,7 @@ export class UsersService {
       password: hashedPassword,
     };
 
+    // Save User to db
     const newUser = this.userRepository.create(user);
 
     const savedUser = await this.userRepository.save(newUser);
