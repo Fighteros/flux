@@ -6,6 +6,7 @@ import {
   HttpStatus,
   Param,
   Post,
+  ValidationPipe,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -30,7 +31,7 @@ export class UsersController {
   }
 
   @Get(':email')
-  async findOne(@Param('email') email: string) {
+  async findOne(@Param('email', new ValidationPipe()) email: string) {
     const user = await this.usersService.findOne(email);
 
     if (!user) {
