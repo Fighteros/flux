@@ -4,7 +4,10 @@ import { AuthController } from './auth.controller';
 import { UsersModule } from '../users/users.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { TokenService } from '../token/token.service';
+import { PassportModule } from '@nestjs/passport';
+import { PassportAuthController } from './passport-auth.controller';
+import { LocalStrategy } from './strategies/local.straregy';
+import { BcryptService } from '../bcrypt/bcrypt.service';
 
 @Module({
   imports: [
@@ -20,10 +23,9 @@ import { TokenService } from '../token/token.service';
         },
       }),
     }),
+    PassportModule,
   ],
-  providers: [AuthService, TokenService],
-  controllers: [AuthController],
+  providers: [AuthService, BcryptService, LocalStrategy],
+  controllers: [AuthController, PassportAuthController],
 })
-export class AuthModule {
-  constructor(private configService: ConfigService) {}
-}
+export class AuthModule {}

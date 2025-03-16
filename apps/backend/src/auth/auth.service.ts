@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
-import { TokenService } from '../token/token.service';
+import { BcryptService } from '../bcrypt/bcrypt.service';
 
 type AuthInput = {
   email: string;
@@ -27,7 +27,7 @@ export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
-    private tokenService: TokenService,
+    private tokenService: BcryptService,
   ) {}
 
   async authenticate(input: AuthInput): Promise<AuthResponse> {
@@ -65,7 +65,7 @@ export class AuthService {
 
     const accessToken = await this.jwtService.signAsync(tokenPayload);
 
-    // user role from db not and not saved to token for token hijack prevention
+    // user role from db not and not saved to bcrypt for bcrypt hijack prevention
     return { accessToken: accessToken, email: user.email, userId: user.userId, role: user.role };
   }
 }

@@ -1,6 +1,6 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
-import { TokenService } from '../token/token.service';
+import { BcryptService } from '../bcrypt/bcrypt.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
@@ -12,7 +12,7 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
-    private tokenService: TokenService,
+    private tokenService: BcryptService,
   ) {}
 
   async create(createUserDto: CreateUserDto, isAdmin = false) {
