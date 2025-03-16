@@ -15,13 +15,17 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { plainToInstance } from 'class-transformer';
 import { ReadUserDto } from './dto/read-user.dto';
 import { PassportJwtAuthGuard } from '../auth/guards/passport-jwt.guard';
+import { Roles } from '../auth/roles/roles.decorator';
+import { Role } from '../auth/roles/roles.enum';
+import { RolesGuard } from '../auth/guards/roles.guard';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post('create-admin')
-  @UseGuards(PassportJwtAuthGuard)
+  @Roles(Role.ADMIN) // Only admins can access
+  @UseGuards(PassportJwtAuthGuard, RolesGuard)
   createAdmin(@Request() request) {
     return request.user;
   }
