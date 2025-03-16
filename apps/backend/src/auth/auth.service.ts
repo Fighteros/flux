@@ -61,11 +61,11 @@ export class AuthService {
     const tokenPayload = {
       sub: user.userId,
       email: user.email,
+      role: user.role,
     };
 
     const accessToken = await this.jwtService.signAsync(tokenPayload);
 
-    // user role from db not and not saved to bcrypt for bcrypt hijack prevention
     return { accessToken: accessToken, email: user.email, userId: user.userId, role: user.role };
   }
 }

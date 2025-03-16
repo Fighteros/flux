@@ -1,21 +1,30 @@
 import {
   Body,
   Controller,
+  Request,
   Get,
   HttpException,
   HttpStatus,
   Param,
   Post,
+  UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { plainToInstance } from 'class-transformer';
 import { ReadUserDto } from './dto/read-user.dto';
+import { PassportJwtAuthGuard } from '../auth/guards/passport-jwt.guard';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
+
+  @Post('create-admin')
+  @UseGuards(PassportJwtAuthGuard)
+  createAdmin(@Request() request) {
+    return request.user;
+  }
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
