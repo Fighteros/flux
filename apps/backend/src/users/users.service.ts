@@ -15,7 +15,7 @@ export class UsersService {
     private tokenService: TokenService,
   ) {}
 
-  async create(createUserDto: CreateUserDto) {
+  async create(createUserDto: CreateUserDto, isAdmin = false) {
     const existingUser = await this.userRepository.findOne({
       where: { email: createUserDto.email },
     });
@@ -31,7 +31,7 @@ export class UsersService {
     const user = {
       ...createUserDto,
       password: hashedPassword,
-      role: createUserDto.role.toLowerCase(),
+      role: isAdmin ? 'admin' : 'user',
     };
 
     // Save User to db

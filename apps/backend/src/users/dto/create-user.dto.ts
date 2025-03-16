@@ -26,7 +26,4 @@ export class CreateUserDto {
 
   @IsOptional()
   avatar: string;
-
-  @IsNotEmpty()
-  role: string;
 }
