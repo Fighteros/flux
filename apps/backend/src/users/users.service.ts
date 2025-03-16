@@ -1,4 +1,8 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  ForbiddenException,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { BcryptService } from '../bcrypt/bcrypt.service';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -6,6 +10,7 @@ import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { ReadUserDto } from './dto/read-user.dto';
 import { plainToInstance } from 'class-transformer';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -51,9 +56,20 @@ export class UsersService {
     return user;
   }
 
-  // update(id: number, updateUserDto: UpdateUserDto) {
-  //   return `This action updates a #${id} user`;
-  // }
+  async update(id: number, updateUserDto: UpdateUserDto, request) {
+    const { user } = request;
+    const userId = user.userId;
+    // if not the same user reject
+    if (userId != id) {
+      throw new ForbiddenException();
+    }
+    // Update user
+    await this.userRepository.update(userId, updateUserDto);
+    const updatedUser = this.userRepository.findOneBy({ id: userId });
+
+    return updatedUser;
+  }
+
   //
   // remove(id: number) {
   //   return `This action removes a #${id} user`;

@@ -5,6 +5,7 @@ import {
   HttpException,
   HttpStatus,
   Param,
+  Patch,
   Post,
   Request,
   UseGuards,
@@ -18,6 +19,7 @@ import { PassportJwtAuthGuard } from '../auth/guards/passport-jwt.guard';
 import { Roles } from '../auth/roles/roles.decorator';
 import { Role } from '../auth/roles/roles.enum';
 import { RolesGuard } from '../auth/guards/roles.guard';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -26,8 +28,8 @@ export class UsersController {
   @Post('create-admin')
   @Roles(Role.ADMIN) // Only admins can access
   @UseGuards(PassportJwtAuthGuard, RolesGuard)
-  createAdmin(@Request() request) {
-    return request.user;
+  createAdmin(@Body() createUserDto: CreateUserDto, @Request() request) {
+    return this.usersService.create(createUserDto, true);
   }
 
   @Post()
@@ -54,10 +56,17 @@ export class UsersController {
     return plainToInstance(ReadUserDto, user);
   }
 
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-  //   return this.usersService.update(+id, updateUserDto);
-  // }
+  @Patch(':id')
+  @UseGuards(PassportJwtAuthGuard)
+  update(
+    @Param('id') id: string,
+    @Body() updateUserDto: UpdateUserDto,
+    @Request() request,
+  ) {
+    const user = this.usersService.update(+id, updateUserDto, request)
+    return plainToInstance(ReadUserDto, user);
+  }
+
   //
   // @Delete(':id')
   // remove(@Param('id') id: string) {
