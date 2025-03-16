@@ -3,8 +3,11 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-
 import { PostsModule } from './posts/posts.module';
+import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
+import { BlogsModule } from './blogs/blogs.module';
+import { UploadModule } from './upload/upload.module';
 import configuration from '../config/configuration';
 
 @Module({
@@ -24,11 +27,14 @@ import configuration from '../config/configuration';
         password: configService.get<string>('database.password'),
         database: configService.get<string>('database.name'),
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
-        synchronize: configService.get('app.env') == 'development',
+        synchronize: configService.get('app.node_env') == 'development',
       }),
     }),
-    UserModule,
     PostsModule,
+    UsersModule,
+    AuthModule,
+    BlogsModule,
+    UploadModule,
   ],
   controllers: [AppController],
   providers: [AppService],

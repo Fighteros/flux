@@ -1,4 +1,3 @@
-import { User } from 'src/users/entities/user.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -7,11 +6,12 @@ import {
   UpdateDateColumn,
   ManyToOne,
 } from 'typeorm';
+import { User } from '../../users/entities/user.entity';
 
 @Entity()
-export class Post {
+export class Blog {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: number
 
   @Column()
   slug: string;
@@ -33,4 +33,5 @@ export class Post {
 
   @ManyToOne(() => User, (user) => user.posts)
   author: User;
+
 }
