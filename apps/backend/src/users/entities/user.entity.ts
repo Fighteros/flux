@@ -8,6 +8,7 @@ import {
   Index,
 } from 'typeorm';
 import { Post } from '../../posts/entities/post.entity';
+import { Blog } from '../../blogs/entities/blog.entity';
 
 @Entity()
 export class User {
@@ -41,4 +42,7 @@ export class User {
 
   @OneToMany(() => Post, (post) => post.author)
   posts: Post[];
+
+  @OneToMany(() => Post, (post) => post.author)
+  blogs: Blog[];
 }

@@ -27,9 +27,11 @@ export class UsersService {
     // Hash the password
     const hashedPassword = await this.tokenService.hashPassword(password);
 
+    // ensure that user role always lowercase to match role enum
     const user = {
       ...createUserDto,
       password: hashedPassword,
+      role: createUserDto.role.toLowerCase(),
     };
 
     // Save User to db
