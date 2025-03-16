@@ -11,7 +11,7 @@ async function bootstrap() {
     whitelist: true,
     transform: true
   }));
-
+  app.enableCors();
   const port = configService.get<number>('app.port') || 5000;
   await app.listen(port);
 }
