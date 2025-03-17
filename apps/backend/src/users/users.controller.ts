@@ -41,14 +41,14 @@ export class UsersController {
   }
 
   @Get()
-  findAll(
+  async findAll(
     @Query('page') page: number = 1,
     @Query('limit') limit: number = 10,
     @Query('sort') sort: 'ASC' | 'DESC',
     @Query('role') role: string,
     @Query('email') email: string,
   ) {
-    const users = this.usersService.findAll({
+    const users = await this.usersService.findAll({
       page,
       limit,
       filter: email
@@ -58,7 +58,7 @@ export class UsersController {
           : undefined,
       sort: sort ? { field: 'createdAt', order: sort } : undefined,
     });
-    if (!users)
+    if (!users.data.length)
       throw new HttpException('Users not found', HttpStatus.NOT_FOUND);
     return users;
   }

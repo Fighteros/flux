@@ -30,19 +30,19 @@ export class PostsController {
   }
 
   @Get()
-  findAll(
+  async findAll(
     @Query('page') page: number = 1,
     @Query('limit') limit: number = 10,
     @Query('content') content: string,
     @Query('sort') sort: 'ASC' | 'DESC',
   ) {
-    const posts = this.postsService.findAll({
+    const posts = await this.postsService.findAll({
       page,
       limit,
       search: content ? { field: 'content', query: content } : undefined,
       sort: sort ? { field: 'createdAt', order: sort } : undefined,
     });
-    if (!posts) {
+    if (!posts.data.length) {
       throw new HttpException('Posts not found', HttpStatus.NOT_FOUND);
     }
     return posts;

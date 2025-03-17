@@ -34,20 +34,20 @@ export class BlogsController {
 
   @Get()
   @UseGuards(PassportJwtAuthGuard)
-  findAll(
+  async findAll(
     @Query('page') page: number = 1,
     @Query('limit') limit: number = 10,
     @Query('content') content: string,
     @Query('sort') sort: 'ASC' | 'DESC',
   ) {
-    const blogs = this.blogsService.findAll({
+    const blogs = await this.blogsService.findAll({
       page,
       limit,
       search: content ? { field: 'content', query: content } : undefined,
       sort: sort ? { field: 'createdAt', order: sort } : undefined,
     });
 
-    if (!blogs) {
+    if (!blogs.data.length) {
       throw new HttpException('Blogs not found', HttpStatus.NOT_FOUND);
     }
 
