@@ -1,7 +1,7 @@
 import {
   ConflictException,
-  Injectable,
   ForbiddenException,
+  Injectable,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { BcryptService } from '../bcrypt/bcrypt.service';
@@ -15,7 +15,7 @@ import { ApiFeatures } from '../utils/ApiFeatures';
 
 @Injectable()
 export class UsersService {
-  private apiFeatures: ApiFeatures<User>
+  private apiFeatures: ApiFeatures<User>;
 
   constructor(
     @InjectRepository(User)
@@ -24,7 +24,6 @@ export class UsersService {
   ) {
     this.apiFeatures = new ApiFeatures<User>(this.userRepository, ReadUserDto);
   }
-
 
   async create(createUserDto: CreateUserDto, isAdmin = false) {
     const existingUser = await this.userRepository.findOne({
@@ -53,8 +52,14 @@ export class UsersService {
     return plainToInstance(ReadUserDto, savedUser);
   }
 
-  async findAll(page:number =1, limit: number = 10) {
-    return await this.apiFeatures.paginate(page, limit);
+  async findAll(params: {
+    page?: number;
+    limit?: number;
+    filter?: { field: string; value: any };
+    search?: { field: string; query: string };
+    sort?: { field: string; order: 'ASC' | 'DESC' };
+  }) {
+    return await this.apiFeatures.findWithAllFeatures(params);
   }
 
   async findOne(email: string) {
@@ -76,8 +81,15 @@ export class UsersService {
     return updatedUser;
   }
 
-  //
-  // remove(id: number) {
-  //   return `This action removes a #${id} user`;
-  // }
+  async remove(id: number, request) {
+    const { user } = request;
+    const userId = user.userId;
+
+    if (userId != id) {
+      throw new ForbiddenException();
+    }
+
+    await this.userRepository.delete(userId);
+    return;
+  }
 }
