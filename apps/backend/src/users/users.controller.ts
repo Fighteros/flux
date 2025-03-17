@@ -9,7 +9,7 @@ import {
   Post,
   Request,
   UseGuards,
-  ValidationPipe,
+  ValidationPipe, Query,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -23,7 +23,8 @@ import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) {
+  }
 
   @Post('create-admin')
   @Roles(Role.ADMIN) // Only admins can access
@@ -37,9 +38,10 @@ export class UsersController {
     return this.usersService.create(createUserDto);
   }
 
+
   @Get()
-  findAll() {
-    const users = this.usersService.findAll();
+  findAll(@Query('page') page: number = 1, @Query('limit') limit: number = 10) {
+    const users = this.usersService.findAll(page, limit);
     if (!users)
       throw new HttpException('Users not found', HttpStatus.NOT_FOUND);
     return plainToInstance(ReadUserDto, users);
@@ -63,7 +65,7 @@ export class UsersController {
     @Body() updateUserDto: UpdateUserDto,
     @Request() request,
   ) {
-    const user = this.usersService.update(+id, updateUserDto, request)
+    const user = this.usersService.update(+id, updateUserDto, request);
     return plainToInstance(ReadUserDto, user);
   }
 

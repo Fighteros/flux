@@ -11,14 +11,20 @@ import { Repository } from 'typeorm';
 import { ReadUserDto } from './dto/read-user.dto';
 import { plainToInstance } from 'class-transformer';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { ApiFeatures } from '../utils/ApiFeatures';
 
 @Injectable()
 export class UsersService {
+  private apiFeatures: ApiFeatures<User>
+
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
     private tokenService: BcryptService,
-  ) {}
+  ) {
+    this.apiFeatures = new ApiFeatures<User>(this.userRepository, ReadUserDto);
+  }
+
 
   async create(createUserDto: CreateUserDto, isAdmin = false) {
     const existingUser = await this.userRepository.findOne({
@@ -47,8 +53,8 @@ export class UsersService {
     return plainToInstance(ReadUserDto, savedUser);
   }
 
-  findAll() {
-    return this.userRepository.find();
+  async findAll(page:number =1, limit: number = 10) {
+    return await this.apiFeatures.paginate(page, limit);
   }
 
   async findOne(email: string) {
