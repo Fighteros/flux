@@ -20,6 +20,7 @@ import { PassportJwtAuthGuard } from '../auth/guards/passport-jwt.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/roles/roles.decorator';
 import { Role } from '../auth/roles/roles.enum';
+import { instanceToPlain } from 'class-transformer';
 
 @Controller('blogs')
 export class BlogsController {
@@ -57,7 +58,8 @@ export class BlogsController {
   @Get(':id')
   @UseGuards(PassportJwtAuthGuard)
   findOne(@Param('id') id: string) {
-    return this.blogsService.findOne(+id);
+    const blog = this.blogsService.findOne(+id);
+    return instanceToPlain(blog);
   }
 
   @Patch(':id')
