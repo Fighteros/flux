@@ -2,6 +2,7 @@ import {
   ConflictException,
   ForbiddenException,
   Injectable,
+  NotFoundException,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { BcryptService } from '../bcrypt/bcrypt.service';
@@ -89,7 +90,10 @@ export class UsersService {
       throw new ForbiddenException();
     }
 
-    await this.userRepository.delete(userId);
-    return;
+    const user_to_delete = await this.userRepository.delete(userId);
+
+    if (user_to_delete.affected === 0) {
+      throw new NotFoundException(`User with ID ${id} not found`);
+    }
   }
 }

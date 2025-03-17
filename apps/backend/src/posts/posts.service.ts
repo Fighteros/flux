@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  ForbiddenException,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { Post } from './entities/post.entity';
@@ -43,14 +47,49 @@ export class PostsService {
   }
 
   async findOne(id: number) {
-    return await this.postRepository.findOneBy({ id: id });
+    const post =  await this.postRepository.findOneBy({ id: id });
+
+    if(!post) {
+      throw new NotFoundException(`Post with ID ${id} not found`);
+    }
+
+    return post;
   }
 
-  update(id: number, updatePostDto: UpdatePostDto) {
-    return `This action updates a #${id} post`;
+  async update(id: number, updatePostDto: UpdatePostDto, req) {
+    const { user } = req;
+    const userId = user.userId;
+
+    const post = await this.postRepository.findOne({
+      where: { id: id, author: { id: userId } },
+    });
+
+    if (!post) {
+      throw new ForbiddenException();
+    }
+    // update
+    await this.postRepository.update(id, updatePostDto);
+
+    return updatePostDto;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} post`;
+  async remove(id: number, req) {
+    const { user } = req;
+    const userId = user.userId;
+
+    const post = await this.postRepository.findOne({
+      where: { id: id, author: { id: userId } },
+    });
+
+    if (!post) {
+      throw new ForbiddenException();
+    }
+
+    const post_to_delete = await this.postRepository.delete(id);
+
+    if (post_to_delete.affected === 0) {
+      throw new NotFoundException(`Post with ID ${id} not found`);
+    }
+    return;
   }
 }

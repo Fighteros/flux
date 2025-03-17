@@ -1,17 +1,17 @@
 import {
-  Entity,
-  PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
-  UpdateDateColumn,
+  Entity,
   ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 
 @Entity()
 export class Blog {
   @PrimaryGeneratedColumn()
-  id: number
+  id: number;
 
   @Column()
   slug: string;
@@ -31,7 +31,9 @@ export class Blog {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => User, (user) => user.posts ,{eager: true})
+  @ManyToOne(() => User, (user) => user.posts, {
+    eager: true, // Automatically fetches the user when querying a post
+    onDelete: 'CASCADE', // Deletes posts when the user is deleted
+  })
   author: User;
-
 }

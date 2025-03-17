@@ -31,6 +31,9 @@ export class Post {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => User, (user) => user.posts, {eager: true})
+  @ManyToOne(() => User, (user) => user.posts, {
+    eager: true,       // Automatically fetches the user when querying a post
+    onDelete: 'CASCADE', // Deletes posts when the user is deleted
+  })
   author: User;
 }
