@@ -11,6 +11,7 @@ import { UploadModule } from './upload/upload.module';
 import configuration from '../config/configuration';
 import { APP_PIPE } from '@nestjs/core';
 
+
 @Module({
   imports: [
     ConfigModule.forRoot({
