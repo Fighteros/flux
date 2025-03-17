@@ -33,8 +33,14 @@ export class PostsService {
     return savedPost;
   }
 
-  findAll() {
-    return `This action returns all posts`;
+  async findAll(params: {
+    page?: number;
+    limit?: number;
+    filter?: { field: string; value: any };
+    search?: { field: string; query: string };
+    sort?: { field: string; order: 'ASC' | 'DESC' };
+  }) {
+    return await this.apiFeatures.findWithAllFeatures(params);
   }
 
   findOne(id: number) {

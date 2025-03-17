@@ -44,7 +44,6 @@ export class UsersController {
   findAll(
     @Query('page') page: number = 1,
     @Query('limit') limit: number = 10,
-    @Query('search') search: string,
     @Query('sort') sort: 'ASC' | 'DESC',
     @Query('role') role: string,
     @Query('email') email: string,
@@ -61,7 +60,7 @@ export class UsersController {
     });
     if (!users)
       throw new HttpException('Users not found', HttpStatus.NOT_FOUND);
-    return plainToInstance(ReadUserDto, users);
+    return users;
   }
 
   @Get(':email')

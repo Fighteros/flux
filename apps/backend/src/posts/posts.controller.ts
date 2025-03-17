@@ -7,7 +7,10 @@ import {
   Param,
   Delete,
   UseGuards,
-  Request
+  Request,
+  Query,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { CreatePostDto } from './dto/create-post.dto';
@@ -25,8 +28,27 @@ export class PostsController {
   }
 
   @Get()
-  findAll() {
-    return this.postsService.findAll();
+  findAll(
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 10,
+    @Query('content') content: string,
+    @Query('date') date: string,
+    @Query('sort') sort: 'ASC' | 'DESC',
+  ) {
+    const posts = this.postsService.findAll({
+      page,
+      limit,
+      filter: content
+        ? { field: 'content', value: content }
+        : date
+          ? { field: 'createAt', value: date }
+          : undefined,
+      sort: sort ? { field: 'createdAt', order: sort } : undefined,
+    });
+    if(!posts) {
+      throw new HttpException('Posts not found', HttpStatus.NOT_FOUND);
+    }
+    return posts;
   }
 
   @Get(':id')

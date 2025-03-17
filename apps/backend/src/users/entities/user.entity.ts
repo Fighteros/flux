@@ -40,9 +40,9 @@ export class User {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToMany(() => Post, (post) => post.author)
+  @OneToMany(() => Post, (post) => post.author, { onDelete: 'CASCADE'})
   posts: Post[];
 
-  @OneToMany(() => Post, (post) => post.author)
+  @OneToMany(() => Post, (post) => post.author, { onDelete: 'CASCADE'})
   blogs: Blog[];
 }
