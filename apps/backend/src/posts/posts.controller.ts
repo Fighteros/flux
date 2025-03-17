@@ -34,7 +34,6 @@ export class PostsController {
     @Query('page') page: number = 1,
     @Query('limit') limit: number = 10,
     @Query('content') content: string,
-    @Query('date') date: string,
     @Query('sort') sort: 'ASC' | 'DESC',
   ) {
     const posts = this.postsService.findAll({

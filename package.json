@@ -7,6 +7,7 @@
   "description": "Full-Stack Authentication & Content Management System\r ## Overview\r This project is a full-stack authentication and content management system built with **NestJS** (backend) and **Next.js** (frontend). It supports role-based access control (RBAC) for two types of content:",
   "main": "index.js",
   "dependencies": {
+    "@faker-js/faker": "^9.6.0",
     "turbo-windows-64": "^2.4.4"
   },
   "scripts": {

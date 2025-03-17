@@ -44,6 +44,6 @@ export class User {
   @OneToMany(() => Post, (post) => post.author)
   posts: Post[];
 
-  @OneToMany(() => Post, (post) => post.author)
+  @OneToMany(() => Blog, (blog) => blog.author)
   blogs: Blog[];
 }

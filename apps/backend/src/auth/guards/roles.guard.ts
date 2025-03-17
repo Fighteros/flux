@@ -6,6 +6,13 @@ import {
 } from '@nestjs/common';
 import { Request } from 'express';
 
+// Add type augmentation for Request
+declare module 'express' {
+  export interface Request {
+    user?: AuthResponse;
+  }
+}
+
 import { Reflector } from '@nestjs/core';
 import { ROLES_KEY } from '../roles/roles.decorator';
 import { Role } from '../roles/roles.enum';
