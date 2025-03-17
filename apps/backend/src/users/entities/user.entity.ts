@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import { Post } from '../../posts/entities/post.entity';
 import { Blog } from '../../blogs/entities/blog.entity';
-
+import { Exclude } from "class-transformer";
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
@@ -29,6 +29,7 @@ export class User {
   avatar: string;
 
   @Column()
+  @Exclude()
   password: string;
 
   @Column()
