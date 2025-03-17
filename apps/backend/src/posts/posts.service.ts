@@ -36,15 +36,14 @@ export class PostsService {
   async findAll(params: {
     page?: number;
     limit?: number;
-    filter?: { field: string; value: any };
-    search?: { field: string; query: string };
+    search?: { field: string; query: any };
     sort?: { field: string; order: 'ASC' | 'DESC' };
   }) {
     return await this.apiFeatures.findWithAllFeatures(params);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} post`;
+  async findOne(id: number) {
+    return await this.postRepository.findOneBy({ id: id });
   }
 
   update(id: number, updatePostDto: UpdatePostDto) {

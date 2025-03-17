@@ -16,6 +16,7 @@ import { PostsService } from './posts.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { PassportJwtAuthGuard } from '../auth/guards/passport-jwt.guard';
+import { instanceToPlain } from 'class-transformer';
 
 @Controller('posts')
 @UseGuards(PassportJwtAuthGuard)
@@ -38,14 +39,10 @@ export class PostsController {
     const posts = this.postsService.findAll({
       page,
       limit,
-      filter: content
-        ? { field: 'content', value: content }
-        : date
-          ? { field: 'createAt', value: date }
-          : undefined,
+      search: content ? { field: 'content', query: content } : undefined,
       sort: sort ? { field: 'createdAt', order: sort } : undefined,
     });
-    if(!posts) {
+    if (!posts) {
       throw new HttpException('Posts not found', HttpStatus.NOT_FOUND);
     }
     return posts;
@@ -53,7 +50,9 @@ export class PostsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.postsService.findOne(+id);
+    const post = this.postsService.findOne(+id);
+    // make sure password isn't leaked from eager
+    return instanceToPlain(post);
   }
 
   @Patch(':id')

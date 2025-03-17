@@ -39,6 +39,7 @@ import { APP_PIPE } from '@nestjs/core';
     UploadModule,
   ],
   controllers: [AppController],
+  // enable global validation
   providers: [AppService,
     {
       provide: APP_PIPE,
