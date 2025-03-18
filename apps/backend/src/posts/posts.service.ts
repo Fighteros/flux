@@ -24,6 +24,14 @@ export class PostsService {
     this.apiFeatures = new ApiFeatures<Post>(this.postRepository, ReadPostDto);
   }
 
+  // only used for seeding posts
+  async createPostSeed(createPostDto: CreatePostDto) {
+    const post = this.postRepository.create(createPostDto);
+    const savedPost = await this.postRepository.save(post);
+
+    return savedPost;
+  }
+
   async create(createPostDto: CreatePostDto, req) {
     const { user } = req;
     const userId = user.userId;
@@ -47,9 +55,9 @@ export class PostsService {
   }
 
   async findOne(id: number) {
-    const post =  await this.postRepository.findOneBy({ id: id });
+    const post = await this.postRepository.findOneBy({ id: id });
 
-    if(!post) {
+    if (!post) {
       throw new NotFoundException(`Post with ID ${id} not found`);
     }
 
