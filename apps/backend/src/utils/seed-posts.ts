@@ -2,9 +2,8 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from '../app.module';
 import { UsersService } from '../users/users.service';
 import { ConfigService } from '@nestjs/config';
-import { BcryptService } from '../bcrypt/bcrypt.service';
 import { PostsService } from '../posts/posts.service';
-import { faker } from '@faker-js/faker/.';
+import { faker } from '@faker-js/faker/locale/en'; // Correct import path
 
 async function seedPosts() {
   const app = await NestFactory.createApplicationContext(AppModule);
@@ -30,7 +29,6 @@ async function seedPosts() {
   for (const post of fakePosts) {
     await postService.createPostSeed(post); // Use your PostsService to create posts
     console.log(`✅ Post created: ${post.title} by ${post.user.email}`);
-
   }
 
   console.log('🎉 Fake posts seeding completed!');
