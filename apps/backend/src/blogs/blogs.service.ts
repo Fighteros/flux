@@ -24,6 +24,20 @@ export class BlogsService {
     this.apiFeatures = new ApiFeatures<Blog>(this.blogsRepository, ReadBlogDto);
   }
 
+
+  // only used for seeding posts
+  async createBlogSeed(createBlogDto: CreateBlogDto) {
+
+    const postToSave = {
+      ...CreateBlogDto,
+      author: {   } as User,
+    }
+    const post = this.blogsRepository.create(createBlogDto);
+    const savedPost = await this.blogsRepository.save(post);
+
+    return savedPost;
+  }
+
   async create(createBlogDto: CreateBlogDto, req) {
     const { user } = req;
     const userId = user.userId;

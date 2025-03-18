@@ -2,12 +2,12 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from '../app.module';
 import { UsersService } from '../users/users.service';
 import { ConfigService } from '@nestjs/config';
-import { PostsService } from '../posts/posts.service';
-import { faker } from '@faker-js/faker/locale/en'; // Correct import path
+import { faker } from '@faker-js/faker/locale/en';
+import { BlogsService } from '../blogs/blogs.service'; // Correct import path
 
-async function seedPosts() {
+async function seedBlogs() {
   const app = await NestFactory.createApplicationContext(AppModule);
-  const postService = app.get(PostsService);
+  const blogService = app.get(BlogsService);
   const userService = app.get(UsersService);
   const configService = app.get(ConfigService);
 
@@ -18,24 +18,24 @@ async function seedPosts() {
     return;
   }
   // Generate 20 fake posts
-  const fakePosts = Array.from({ length: 20 }, () => ({
+  const fakeBlogs = Array.from({ length: 20 }, () => ({
     title: faker.lorem.words(3), // Generate a title with 3 random words
     content: faker.lorem.paragraph(), // Generate a random paragraph
     image: faker.image.url(), // Generate a random image URL
-    author: users.data[Math.floor(Math.random() * users.data.length)].id , // Assign a random user,
+    author: users.data[Math.floor(Math.random() * users.data.length)].id, // Assign a random user,
     slug: faker.lorem.slug(), // Generate a slug based on a fake string
   }));
 
-  for (const post of fakePosts) {
-    await postService.createPostSeed(post); // Use your PostsService to create posts
-    console.log(`✅ Post created: ${post.title} by ${post.author}`);
+  for (const blog of fakeBlogs) {
+    await blogService.createBlogSeed(blog); // Use your PostsService to create posts
+    console.log(`✅ Blog created: ${blog.title} by ${blog.author}`);
   }
 
-  console.log('🎉 Fake posts seeding completed!');
+  console.log('🎉 Fake blogs seeding completed!');
 
   await app.close();
 }
 
-seedPosts().catch((err) => {
+seedBlogs().catch((err) => {
   console.error('Error seeding posts:', err);
 });

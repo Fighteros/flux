@@ -26,6 +26,11 @@ export class PostsService {
 
   // only used for seeding posts
   async createPostSeed(createPostDto: CreatePostDto) {
+
+    const postToSave = {
+      ...createPostDto,
+      author: {   } as User,
+    }
     const post = this.postRepository.create(createPostDto);
     const savedPost = await this.postRepository.save(post);
 
