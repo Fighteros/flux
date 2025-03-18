@@ -21,8 +21,8 @@ const Navbar = (props: Props) => {
     const isScrolledDown = scrollPosition > 10;
 
     return (
-        <nav className={cn("fixed w-full z-30 text-white", {
-            "bg-sky/20 backdrop-blur-md text-grey-500 shadow-md":isScrolledDown
+        <nav className={cn("hidden fixed w-full z-30 text-[#FFB200] text-xl top-0 md:block", {
+            "bg-sky/20 backdrop-blur-md text-white shadow-md": isScrolledDown
         })}>
             <div className="flex items-center px-4 py-4 container">
                 {props.children}

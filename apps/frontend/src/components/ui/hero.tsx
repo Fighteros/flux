@@ -1,8 +1,8 @@
-import {WaveDiv} from "@/icons/icons";
+import {WaveDiv} from "../../icons/icons";
 
 const Hero = () => (
     // outer container
-    <div className="bg-linear-to-bl from-violet-500 to-fuchsia-500 text-white pt-12">
+    <div className="bg-linear-to-bl from-violet-500 to-fuchsia-500 text-white pt-24">
         <div className="container mx-auto flex flex-col md:flex-row items-center flex-wrap px-5">
             {/* left col */}
             <div className="flex flex-col w-full justify-center items-start md:w-2/5 text-center md:text-left">
