@@ -11,9 +11,9 @@ const Nav = (props: Props) => (
             </Link>
         </div>
         <div className="flex flex-col md:flex-row gap-2 ml-auto [&>a]:py-2 [&>a]:px-4 [&>a]:transition [&>a]:rounded-md [&>a:hover]:text-fuchsia-100 [&>a:hover]:bg-fuchsia-500 ">
-            <Link className="" href="/">
-                Blog
-            </Link>
+            {/*<Link className="" href="/">*/}
+            {/*    Blog*/}
+            {/*</Link>*/}
 
             <Link className="" href="#about">
                 About

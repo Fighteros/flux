@@ -2,11 +2,19 @@ import axios from 'axios';
 import {BACKEND_URL} from "@/lib/contants";
 
 
-export async function getPosts() {
-    const accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlck9uZUBGbHV4LmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQyMzQ3MzU0LCJleHAiOjE3NDIzNTA5NTR9.YnJCHT30o739zSq4iyeBtqYuRR50vjNiX0VqoukmzQk";
+type searchParams = {
+    page?: number,
+    limit?: number,
+    search?: string,
+    sort?: string,
+    content?: string,
+}
+
+export async function getPosts({page, limit, search, sort, content}: searchParams) {
+    const accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlck9uZUBGbHV4LmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQyMzQ5MTQ3LCJleHAiOjE3NDIzNTI3NDd9.1fhGCasZsqn_EbFPGgmQ14wqK9wdBiHGfoii3_GSszk";
 
     try {
-        const data = await axios.get(BACKEND_URL +'/posts', {
+        const data = await axios.get(BACKEND_URL + `/posts?page=${page}&${limit}&${sort}&${content}}`, {
             headers: {
                 'Authorization': `Bearer ${accessToken}`
             }
