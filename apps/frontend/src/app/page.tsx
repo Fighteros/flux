@@ -10,18 +10,13 @@ type Props = {
 export default async function Home({searchParams}: Props) {
     const {page, limit, sort, content} = await searchParams as { [key: string]: string | undefined };
 
-    const posts = await getPosts({
-        page: page ? parseInt(page as string, 10) : 1,
-        limit: limit ? parseInt(limit as string, 10) : 10,
-        sort: sort ? sort : 'ASC',
-        content: content ? content : ''
-    });
+    const posts = await getPosts({ page: page ? +page : 1 });
 
 
     return (
         <main>
             <Hero/>
-            <Posts posts={posts}/>
+            <Posts posts={posts.data} currentPage={page? +page : 1 } totalPages={Math.ceil(posts.total / 10)} />
         </main>
     );
 }

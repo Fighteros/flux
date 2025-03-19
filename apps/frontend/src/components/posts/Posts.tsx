@@ -1,9 +1,12 @@
 import {Post} from '@/lib/types/modelTypes';
 import PostCard from "@/components/posts/PostCard";
 import {InformationIcon} from "@/icons/icons";
+import Pagination from "@/components/Pagination";
 
 type PostProps = {
     posts: Post[]
+    totalPages: number
+    currentPage: number
 }
 
 type TitleProps = {
@@ -24,7 +27,7 @@ const TitleWithBottomLine = (props: TitleProps) => {
 }
 
 const Posts = (props: PostProps) => {
-    const {posts = []} = props;
+    const {posts, totalPages, currentPage} = props;
 
     if (!posts || !Array.isArray(posts)) {
         console.log("No posts found", posts);
@@ -33,7 +36,7 @@ const Posts = (props: PostProps) => {
                 <TitleWithBottomLine title="Latest Posts"/>
 
                 <div className="size-24 mb-10">
-                <InformationIcon />
+                    <InformationIcon/>
                 </div>
                 <h2 className="text-2xl font-bold text-gray-800 mb-2">No Posts Found</h2>
                 {/* Subtext */}
@@ -55,6 +58,8 @@ const Posts = (props: PostProps) => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {posts.map(post => (<PostCard key={post.id} {...post}/>))}
             </div>
+
+            <Pagination className="mt-4" totalPages={totalPages} currentPage={currentPage}/>
         </section>
     );
 }
