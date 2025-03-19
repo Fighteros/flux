@@ -10,7 +10,7 @@ const Nav = (props: Props) => (
                     <img className="size-24" src="/logo.svg" alt="logo"/>
             </Link>
         </div>
-        <div className="flex flex-col md:flex-row gap-2 ml-auto [&>a]:py-2 [&>a]:px-4 [&>a]:transition [&>a]:rounded-md [&>a:hover]:text-fuchsia-100 [&>a:hover]:bg-fuchsia-500 ">
+        <div className="flex flex-col md:flex-row gap-2 ml-auto [&>a]:py-2 [&>a]:px-4 [&>a]:transition [&>a]:rounded-md [&>a:hover]:text-fuchsia-100 [&>a:hover]:bg-violet-500 ">
             {/*<Link className="" href="/">*/}
             {/*    Blog*/}
             {/*</Link>*/}

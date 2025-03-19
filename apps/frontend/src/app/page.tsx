@@ -8,15 +8,17 @@ type Props = {
 }
 
 export default async function Home({searchParams}: Props) {
-    const {page, limit, sort, content} = await searchParams as { [key: string]: string | undefined };
+    const {page} = await searchParams as { [key: string]: string | undefined };
 
-    const posts = await getPosts({ page: page ? +page : 1 });
 
+    const posts = await getPosts({page: page ? +page : 1});
+
+    // console.log(posts);
 
     return (
         <main>
             <Hero/>
-            <Posts posts={posts.data} currentPage={page? +page : 1 } totalPages={Math.ceil(posts.total / 10)} />
+            <Posts posts={posts.data} currentPage={page ? +page : 1} totalPages={Math.ceil(posts.total / 10)}/>
         </main>
     );
 }

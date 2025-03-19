@@ -1,17 +1,20 @@
-import {BACKEND_URL} from "@/lib/contants";
+import api from "@/api/axios";
 
 
 export async function getPosts({ page }: { page: number }) {
-    const accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlck9uZTFARmx1eC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc0MjM1NDYyOSwiZXhwIjoxNzQyMzU4MjI5fQ.n0IIsnT9ZeC1E6DGxVlTdkXAAIgOcX0TNH8IhVsnR0k";
+
 
     try {
-        const data = await fetch(BACKEND_URL + `/posts?page=${page}`, {
-            headers: {
-                'Authorization': `Bearer ${accessToken}`
-            }
-        })
-        return data.json()
+        const res = await api.get(`/posts?page=${page}`)
+
+        return res.data;
     } catch (e) {
         return {error: e}
     }
+}
+
+
+export  const getPostById = async (id: number)  =>  {
+    const res = await api.get(`/posts/${id}`)
+    return res.data;
 }

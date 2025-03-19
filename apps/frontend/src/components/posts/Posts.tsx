@@ -30,7 +30,6 @@ const Posts = (props: PostProps) => {
     const {posts, totalPages, currentPage} = props;
 
     if (!posts || !Array.isArray(posts)) {
-        console.log("No posts found", posts);
         return (
             <div className="flex flex-col items-center justify-center">
                 <TitleWithBottomLine title="Latest Posts"/>
