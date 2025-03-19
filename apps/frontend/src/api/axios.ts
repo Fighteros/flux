@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, {AxiosError, AxiosResponse} from 'axios';
 import {accessToken, BACKEND_URL} from "@/lib/contants";
 
 
@@ -9,6 +9,14 @@ const api = axios.create({
         'Authorization': `Bearer ${accessToken}`
     },
 });
+
+
+export async function handle<T>(promise: Promise<AxiosResponse<T>>) {
+    return promise
+        .then((res) => [res, null] as const)
+        .catch((err: AxiosError) => [null, err] as const);
+}
+
 
 // Add interceptor for Authorization tokens
 export const setAuthToken = (token: string | null) => {

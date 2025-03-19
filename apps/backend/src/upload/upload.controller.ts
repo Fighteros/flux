@@ -1,6 +1,7 @@
 import {
   Controller,
   Post,
+  ServiceUnavailableException,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
@@ -16,7 +17,11 @@ export class UploadController {
   @Post('image')
   @UseInterceptors(FileInterceptor('file'))
   async uploadImage(@UploadedFile() file: Express.Multer.File) {
-    const image = this.cloudinaryService.uploadFile(file);
-    return plainToInstance(ImageResponseDto, image);
+    try {
+      const image = this.cloudinaryService.uploadFile(file);
+      return plainToInstance(ImageResponseDto, image);
+    } catch (error) {
+      throw new ServiceUnavailableException();
+    }
   }
 }

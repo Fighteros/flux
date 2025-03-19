@@ -34,3 +34,11 @@ export type User = {
     posts: Post[];
     blogs: Blog[]
 }
+
+export type SignUpUser = {
+    first_name: string;
+    last_name: string;
+    email: string;
+    password: string;
+    avatar?: string;
+}

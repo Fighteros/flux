@@ -9,13 +9,16 @@ const SignUp = () => {
                 Signup
             </h2>
             {/*  sign up form  */}
+
+
             <div>
+                <SignUpForm />
+
                 <p>Already have an account?</p>
                 <Link href={'/auth/signin'}>
                     Sign In
                 </Link>
             </div>
-            <SignUpForm />
         </div>
 
     );

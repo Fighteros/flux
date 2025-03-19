@@ -1,13 +1,15 @@
 import {Button, ButtonProps} from "@/components/ui/button";
-import {useFormState} from 'react-hook-form';
 
-const SubmitButton = ({children, ...props}: ButtonProps) => {
-    const { isSubmitting } = useFormState();
+type propsType = ButtonProps & {
+    pending?: boolean
+}
+
+const SubmitButton = ({children, pending, ...props}: propsType) => {
 
 
     return (
-        <Button type="submit" aria-label={isSubmitting ? "Submitting..." : undefined} {...props}>
-            {isSubmitting ? <span className="animate-pulse">Submitting...</span> : children}
+        <Button type="submit" aria-label={pending ? "Submitting..." : undefined} {...props}>
+            {pending ? <span className="animate-pulse">Submitting...</span> : children}
         </Button>
     );
 }
