@@ -3,7 +3,7 @@ import {BACKEND_URL} from "@/lib/contants";
 
 
 export async function getPosts() {
-    const accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlck9uZUBGbHV4LmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQyMzQyMzM2LCJleHAiOjE3NDIzNDU5MzZ9.2gzWogUW1zU7nzGCQr5wy5woVj0UX23K22743Bwccqw";
+    const accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlck9uZUBGbHV4LmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQyMzQ3MzU0LCJleHAiOjE3NDIzNTA5NTR9.YnJCHT30o739zSq4iyeBtqYuRR50vjNiX0VqoukmzQk";
 
     try {
         const data = await axios.get(BACKEND_URL +'/posts', {
