@@ -6,7 +6,7 @@ type Props = PropsWithChildren;
 
 const MobileNav = (props: Props) => {
     return (
-        <div className="md:hidden">
+        <div className="md:hidden text-yellow-500">
             <SideBar triggerIcon={<Bars3Icon className="w-4"/>}
                      triggerClassName="absolute top-2 left-2"
             >
