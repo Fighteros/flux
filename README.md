@@ -3,6 +3,8 @@ Full-Stack Authentication & Content Management System
 ## Overview
 This project is a full-stack authentication and content management system built with **NestJS** (backend) and **Next.js** (frontend). It supports role-based access control (RBAC) for two types of content:
 
+![flux](/5.png)
+
 - **Posts**: Can be managed by both Users and Admins.
 - **Blogs**: Only Admins can create, update, and delete, while Users can only view.
 
@@ -67,36 +69,57 @@ This project is a full-stack authentication and content management system built 
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/your-username/your-repo.git
-cd your-repo
+git clone https://github.com/fighteros/flux.git
+cd flux
 ```
 
 ### 2. Backend Setup (NestJS)
+create .env file and file values for env variables from file `apps/backend/config/configurations.ts`
 ```bash
 cd backend
 npm install
 ```
 - Create a `.env` file and configure database credentials:
 ```env
-DATABASE_URL=postgresql://user:password@localhost:5432/yourdb
-JWT_SECRET=your-secret-key
+DB_HOST=host-to-db
+DB_PORT=por
+DB_USERNAME=you-db-user
+DB_PASSWORD=you-db-password
+DB_NAME=your-db-name
+PORT=port-to-the-backend-server # only in local development
+NODE_ENV=development #set to production if deployed
+JWT_SECRET=-your-jwt-secert
+JWT_EXPIRES_IN='1d'  #3600s
+CLOUD_NAME=-get-from-cloudinary
+CLOUDINARY_API_KEY=-get-from-cloudinary
+CLOUDINARY_API_SECRET=-get-from-cloudinary
+ADMIN_EMAIL=set-email-for-the-admin-user-that-you-would-seed
+ADMIN_PASSWORD=set-admin-password
 ```
 - Run migrations and start the backend server:
 ```bash
-npm run migration:run
-npm run start:dev
+# seed admin user
+npm run seed:admin
+# seed posts (optional)
+npm run seed:posts
+# seed blogs (optional)
+npm run seed:posts
 ```
 
 ### 3. Frontend Setup (Next.js)
 ```bash
 cd frontend
 npm install
+```
+
+### 4. RUN
+```bash
 npm run dev
 ```
 
 ### 4. Access the App
 - **Frontend**: `http://localhost:3000`
-- **Backend API**: `http://localhost:5000`
+- **Backend API**: `http://localhost:8000`
 
 ## Contributing
 Feel free to open an issue or submit a pull request.
